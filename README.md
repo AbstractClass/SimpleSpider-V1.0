@@ -30,7 +30,7 @@ Doing research on this, I discovered that there are a million and one ways to do
 - re (instead of bs4 for html parsing)
 - threading (so it can process multiple urls at once)
 
-I want to make this thing as fast as possible and offer lot's of choice in crawling methods (optional threading, sure.  want the program to simulate clicking each link, sure.)
+I want to make this thing as fast as possible and offer lots of choice in crawling methods (optional threading? sure.  want the program to simulate clicking each link? sure. Want translation to Klingon? sure(if you can point me to the right module).)
 
 Suggestions
 ---
