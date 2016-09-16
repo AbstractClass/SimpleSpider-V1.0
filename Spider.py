@@ -69,13 +69,14 @@ def spider(base_url, max_pages=None, halt_phrase=None, cache_pages=False, outfil
             if halt_phrase:
                 found_phrase = found_in_soup(halt_phrase, soup)
 
+            links_last_round = len(new_links)
+
             raw_links = find_links(soup)
             good_links = clean_links(url, raw_links)
             new_links = new_links | good_links
 
-            print(url, "seen")
-            print(len(new_links), " new links found")
-
+            print(url, "scanned")
+            print(len(new_links) - links_last_round, " new links found")
             countdown -= 1
             if countdown == 0:
                 print(max_pages, " pages seen, stopping spider...")
@@ -86,11 +87,4 @@ def spider(base_url, max_pages=None, halt_phrase=None, cache_pages=False, outfil
 
 
 if __name__ == "__main__":
-    spider('http://wikipedia.org/wiki/Spider', max_pages=10, cache_pages=True)
-#    page = fetch_page('http://wikipedia.org/wiki/Spider')
-#    soup = BeautifulSoup(page.text, 'lxml')
-#    raw_links = find_links(soup)
-#    good_links = clean_links(page.url, raw_links)
-#    print(list(good_links))
-#    print(found_in_soup('Spider', soup))
-#    log_info(page.url, page.text, 'mylog.txt')
+    spider('http://wikipedia.org/wiki/Spider', max_pages=10)
