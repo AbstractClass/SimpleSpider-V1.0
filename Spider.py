@@ -2,12 +2,20 @@ import requests
 from bs4 import BeautifulSoup
 from urllib import parse
 import re
+import time
 
 __author__ = 'Connor MacLeod'
 
 
 def fetch_page(url):  # Gets the page with requests module
-    return requests.get(url)
+    timeout = 50
+    while timeout > 0:
+        try:
+            return requests.get(url)
+        except Exception as e:
+            print('requests is mad because: ', e, ' trying again in 5s.  Timeout in: ', timeout)
+            timeout -= 1
+            time.sleep(5)
 
 
 def clean_links(parent_url, dirty_links):  # Removes same-page links and fixes partial links
@@ -32,9 +40,13 @@ def find_links(soup):  # Will be expanded to utilise different methods (ghost.py
 
 
 def found_in_soup(search_string, soup):
-    if soup.body.findAll(text=search_string):
-        return True
-    else:
+    try:
+        if soup.body.findAll(text=search_string):
+            return True
+        else:
+            return False
+    except Exception as e:
+        print('page could not be read due to: ', type(e), e)
         return False
 
 
@@ -87,4 +99,4 @@ def spider(base_url, max_pages=None, halt_phrase=None, cache_pages=False, outfil
 
 
 if __name__ == "__main__":
-    spider('http://wikipedia.org/wiki/Spider', max_pages=10)
+    spider('http://Disney.com', max_pages=50, halt_phrase='Deadpool')
